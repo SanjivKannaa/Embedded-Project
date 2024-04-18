@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Dashboard | Gas Leakage Detection System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+      color: #333;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 55px;
+    }
+    #main-content {
+      padding: 50px;
+      text-align: center;
+    }
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #45a049;
+    }
+    .contributors {
+      margin-top: 30px;
+      text-align: left;
+    }
+    .contributors h2 {
+      color: #333;
+      font-size: 24px;
+    }
+    .contributors p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .contributor-img {
+      width: 100px;
+      border-radius: 10%;
+      margin-right: 20px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #contributor-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .content {
+      flex: 1;
+      text-align: center;
+      padding: 20px;
+      margin-right: 100px;
+      margin-left: 100px;
+    }
+    .contributor-img {
+      width: 25%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gas Leakage Detection System</h1>
+  </header>
+  <div id="main-content">
+    
+    <div class="data-box">
+        <h2>Average Gas Level (Past 24 hrs):</h2>
+        <p>5.2 PPM</p>
+      </div>
+      <div class="data-box">
+        <h2>Last Leak Detected:</h2>
+        <p>2024-04-17 14:32:11</p>
+      </div>
+      <div class="data-box">
+        <h2>Number of Leaks Detected (Past 30 days):</h2>
+        <p>12</p>
+      </div>
+      <div id="chart-container"></div>
+      <script>
+        const ctx = document.getElementById('chart-container').getContext('2d');
+        const chart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['Normal', 'Elevated'],
+            datasets: [{
+              data: [80, 20], // Adjust these values based on your actual data
+              backgroundColor: [
+                'rgba(0, 255, 0, 0.7)', // Green for normal
+                'rgba(255, 0, 0, 0.7)', // Red for elevated
+              ],
+            }],
+          },
+          options: {
+            responsive: true,
+          },
+        });
+      </script>
+</body>
+</html>
