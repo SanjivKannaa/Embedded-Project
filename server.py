@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import mysql.connector as sql
 from twilio.rest import Client
 import env
+import time
 
 try:
     mydb = sql.connect(
@@ -15,6 +16,7 @@ try:
     print("DB CONNECTED SUCCESSFULLY")
 except:
     print("DB CONNECTION FAILED")
+    time.sleep(5)
     exit()
 
 
