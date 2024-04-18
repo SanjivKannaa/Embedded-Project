@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  db:
+    container_name: embedded-project-mysql
+    image: mysql
+    expose:
+      - 3306
+    env_file:
+      - .env
+  server:
+    container_name: embedded-project-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    command: ["python3", "server.py"]
+    restart: always

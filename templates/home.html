@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Leakage Detection System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        #main-content {
+            padding: 50px;
+            text-align: center;
+        }
+        #system-img {
+            /* width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px; */
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .contributors {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .contributors h2 {
+            color: #333;
+            font-size: 24px;
+        }
+        .contributors p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .contributor-img {
+            width: 100px;
+            border-radius: 10%;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #contributor-div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            margin-right: 100px;
+            margin-left: 100px;
+        }
+        .contributor-img {
+            width: 25%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="font-size: 55px;">Gas Leakage Detection System</h1>
+    </header>
+    <div id="main-content">
+        <br><br>
+        <img id="system-img" src="/static/img/landing_page1.jpeg" alt="System Image">
+        <br><br><br><br>
+        <p>Welcome to our gas leakage detection system. In today's world, where safety and environmental concerns are paramount, our system provides an essential layer of protection against potential hazards.</p>
+        <p>Our system utilizes a range of components including Raspberry Pi, gas sensors (such as MQ2), fire sensors, and GSM technology, all interconnected to detect and alert about gas leakage promptly.</p>
+        <p>Gas leaks can lead to serious health risks, environmental pollution, and even explosions. Hence, early detection and immediate action are crucial in preventing accidents and ensuring safety.</p>
+        <br><br>
+        <button class="btn" onclick="window.open('/static/presentation.pdf')">Learn More</button>
+        <br><br>
+
+        <div class="contributors">
+            <h2 style="text-align: center; font-size: 50px;">Contributors</h2>
+            <div id="contributor-div">
+                <div class="content">
+                    <img class="contributor-img" src="/static/img/sanjiv.jpg" alt="Sanjiv Kannaa Jeganathan">
+                </div>
+                <div class="content">
+                    <p><strong>Sanjiv Kannaa Jeganathan</strong></p>
+                    <p>A dedicated member of our team from NIT Trichy, Sanjiv has been instrumental in the development of the software and hardware components of our project.</p>
+                </div>
+            </div>
+            <div id="contributor-div">
+                <!-- <div class="content">
+                    <img class="contributor-img" src="/static/img/sanjiv.jpg" alt="Sanjiv Kannaa Jeganathan">
+                </div> -->
+                <div class="content">
+                    <p><strong>Krupa Sagar Reddy</strong></p>
+                    <p>Another talented individual from NIT Trichy, Krupa has contributed significantly to the design and implementation of our gas detection algorithms.</p>
+                </div>
+                <div class="content">
+                    <img class="contributor-img" src="/static/img/krupa.enc" alt="Sanjiv Kannaa Jeganathan">
+                </div>
+            </div>
+            <div id="contributor-div">
+                <div class="content">
+                    <img class="contributor-img" src="/static/img/appruval.jpeg" alt="Sanjiv Kannaa Jeganathan">
+                </div>
+                <div class="content">
+                    <p><strong>Appruval Kumar</strong></p>
+                    <p>With his expertise in embedded systems, Appruval has played a key role in integrating various components and ensuring the seamless operation of our system.</p>
+                </div>
+            </div>
+            <h2 style="text-align: center; font-size: 50px;">Special Thanks To</h2>
+            <div id="contributor-div">
+                <div class="content">
+                    <p><strong>Dr. Sameedha Begam</strong></p>
+                    <p>With his expertise in embedded systems, Appruval has played a key role in integrating various components and ensuring the seamless operation of our system.</p>
+                </div>
+                <div class="content">
+                    <img class="contributor-img" src="/static/img/appruval.jpeg" alt="Sanjiv Kannaa Jeganathan">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
