@@ -3,7 +3,9 @@ from dotenv import dotenv_values
 mysqlhost = dotenv_values(".env")["MYSQL_HOST"]
 mysqluser = dotenv_values(".env")["MYSQL_USER"]
 mysqlpass = dotenv_values(".env")["MYSQL_PASSWORD"]
-mysqltablename = dotenv_values(".env")["MYSQL_TABLE_NAME"]
+mysqltablename1 = dotenv_values(".env")["MYSQL_TABLE_NAME_1"]
+mysqltablename2 = dotenv_values(".env")["MYSQL_TABLE_NAME_2"]
+mysqltablename3 = dotenv_values(".env")["MYSQL_TABLE_NAME_3"]
 mysqldb = dotenv_values(".env")["MYSQL_DATABASE"]
 
 account_sid = dotenv_values(".env")["twilio_account_sid"]

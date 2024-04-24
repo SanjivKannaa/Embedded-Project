@@ -12,7 +12,9 @@ try:
         database=env.mysqldb
     )
     cur = mydb.cursor()
-    cur.execute('''CREATE TABLE IF NOT EXISTS {} (timestamp TIMESTAMP, gas1 varchar(3), gas2 varchar(3), gas3 varchar(3))'''.format(env.mysqltablename))
+    cur.execute('''CREATE TABLE IF NOT EXISTS {} (timestamp VARCHAR(20), value varchar(1))'''.format(env.mysqltablename1))
+    cur.execute('''CREATE TABLE IF NOT EXISTS {} (timestamp VARCHAR(20), value varchar(1))'''.format(env.mysqltablename2))
+    cur.execute('''CREATE TABLE IF NOT EXISTS {} (timestamp VARCHAR(20), value varchar(1))'''.format(env.mysqltablename3))
     print("DB CONNECTED SUCCESSFULLY")
 except:
     print("DB CONNECTION FAILED")
@@ -40,24 +42,28 @@ def home():
 def dashboard():
     return render_template("dashboard.html")
 
-@app.get("/api/safe")
+@app.post("/api/safe")
 def safe_handler():
     try:
-        data = request.json
-        for i in data:
-            query = '''INSERT INTO {} values("{}", "{}", "{}", "{}")'''.format(env.mysqltablename, i['timestamp'], i['gas1'], i['gas2'], i['gas3'])
+        data = dict(request.json)
+        device_id = data["id"]
+        keys = list(data["data"].keys())
+        values = list(data["data"].values())
+        for i in range(len(keys)):
+            query = '''INSERT INTO {} values("{}", "{}")'''.format(device_id, keys[i], values[i])
             cur.execute(query)
         mydb.commit()
         return 'Data added to database!'
     except:
-        return 'ERROR'
+        return "ERROR"
+
 
 @app.get("/api/unsafe")
 def unsafe_handler():
     try:
+        # time.sleep(10)
         message_body = "A gas leak gas been detected in the smart gas leak detection system.\nActivity in the last 1 min:\nTIMESTAMP     GAS1 GAS2 GAS3"
-        query = '''SELECT * FROM {} ORDER BY timestamp DESC LIMIT 6'''.format(env.mysqltablename)
-        query = '''SELECT * FROM {} ORDER BY timestamp DESC LIMIT 6'''.format(env.mysqltablename)
+        query = '''SELECT timestamp, value FROM ( SELECT timestamp, value as {} FROM {} UNION SELECT timestamp, value as {} FROM {} UNION SELECT timestamp, value as {} FROM {} ) AS all ORDER BY timestamp DESC LIMIT 6'''.format(env.mysqltablename1, env.mysqltablename1, env.mysqltablename2, env.mysqltablename2, env.mysqltablename3, env.mysqltablename3)
         cur.execute(query)
         empty_db = True
         for i in cur.fetchall():
