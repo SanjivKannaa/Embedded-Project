@@ -97,13 +97,30 @@
       font-size: 30px;
       width: 80%;
       border: 4px solid #333;
+      background-color: black;
     }
     tr, th{
       border: 4px solid #333;
+      background-color: white;
     }
     td{
       border: 2px solid #333;
     }
+    #count_table{
+      border: 0px solid #333;
+      width: 7.5%;
+      font-size: 20px;
+    }
+    #count_tr{
+      border: 0px solid #333;
+    }
+    #count_th{
+      border: 0px solid #333;
+    }
+    #count_td{
+      border: 0px solid #333;
+    }
+
   </style>
 </head>
 <body>
@@ -112,16 +129,25 @@
   </header>
   <div id="main-content">
     <div class="data-box">
-      <h2>Average Gas Level (Past 24 hrs):</h2>
-      <p>5.2 PPM</p>
-    </div>
-    <div class="data-box">
       <h2>Last Leak Detected:</h2>
-      <p>2024-04-17 14:32:11</p>
+      <p>{{ last_leak }}</p>
     </div>
     <div class="data-box">
       <h2>Number of Leaks Detected (Past 30 days):</h2>
-      <p>12</p>
+      <table id="count_table">
+        <tr id="count_tr">
+          <th id="count_th">MQ2</th>
+          <td id="count_td"> {{ mq2_count }} </td>
+        </tr>
+        <tr id="count_table">
+          <th id="count_th">MQ3</th>
+          <td id="count_td"> {{ mq3_count }} </td>
+        </tr>
+        <tr id="count_table">
+          <th id="count_th">MQ4</th>
+          <td id="count_td"> {{ mq4_count }} </td>
+        </tr>
+      </table>
     </div>
     <div class="data-box">
       <h2>ROW COUNT</h2>
@@ -129,6 +155,12 @@
     </div>
     <br><br><br><br>
     <table>
+      <!-- <tr>
+        <th></th>
+        <th>{{ mq2_count }}</th>
+        <th>{{ mq3_count }}</th>
+        <th>{{ mq4_count }}</th>
+      </tr> -->
       <tr>
         <th>TIMESTAMP</th>
         <th>MQ2</th>

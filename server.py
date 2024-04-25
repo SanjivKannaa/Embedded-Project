@@ -3,6 +3,7 @@ import mysql.connector as sql
 from twilio.rest import Client
 import env
 import time
+import datetime
 
 try:
     mydb = sql.connect(
@@ -40,16 +41,68 @@ def home():
 
 @app.get("/dashboard")
 def dashboard():
-    table_data = "inital table data"
+    last_leak = ""
+    mq2_count = 0
+    mq3_count = 0
+    mq4_count = 0
     row_count = 0
+    table_data = "inital table data"
     t1 = env.mysqltablename1
     t2 = env.mysqltablename2
     t3 = env.mysqltablename3
+    try:
+        query = '''
+        SELECT
+        {}.timestamp,
+        {}.value AS {}value,
+        {}.value AS {}value,
+        {}.value AS {}value
+        FROM {}
+        LEFT JOIN {} ON {}.timestamp = {}.timestamp
+        LEFT JOIN {} ON {}.timestamp = {}.timestamp
+        WHERE {}.value=1 or {}.value=1 or {}.value=1
+        ORDER BY timestamp DESC LIMIT 1'''.format(t1, t1, t1, t2, t2, t3, t3, t1, t2, t1, t2, t3, t2, t3, t1, t2, t3)
+        cur.execute(query)
+        # last_leak = str(cur.fetchall()[0][3])
+        data = cur.fetchall()[0]
+        last_leak = data[0] + " "
+        if data[1] == "1":
+            last_leak += t1 + " "
+        elif data[2] == "1":
+            last_leak += t2 + " "
+        elif data[3] == "1":
+            last_leak += t3 + " "
+    except:
+        pass
     try:
         # get total row count
         query = '''SELECT COUNT(*) FROM {}'''.format(t1)
         cur.execute(query)
         row_count = cur.fetchall()[0][0]
+    except:
+        pass
+    try:
+        current_time = datetime.datetime.now()
+        thirty_days_ago = current_time - datetime.timedelta(days=30)
+        formatted_time = thirty_days_ago.strftime("%Y-%m-%d %H:%M:%S")
+        cur.execute("SELECT count(*) from {} where value=1 and timestamp>{}".format(t1, formatted_time))
+        mq2_count = cur.fetchall()[0][0]
+    except:
+        pass
+    try:
+        current_time = datetime.datetime.now()
+        thirty_days_ago = current_time - datetime.timedelta(days=30)
+        formatted_time = thirty_days_ago.strftime("%Y-%m-%d %H:%M:%S")
+        cur.execute("SELECT count(*) from {} where value=1 and timestamp>{}".format(t2, formatted_time))
+        mq3_count = cur.fetchall()[0][0]
+    except:
+        pass
+    try:
+        current_time = datetime.datetime.now()
+        thirty_days_ago = current_time - datetime.timedelta(days=30)
+        formatted_time = thirty_days_ago.strftime("%Y-%m-%d %H:%M:%S")
+        cur.execute("SELECT count(*) from {} where value=1 and timestamp>{}".format(t3, formatted_time))
+        mq4_count = cur.fetchall()[0][0]
     except:
         pass
     try:
@@ -71,7 +124,7 @@ def dashboard():
             table_data = [["EMPTY", "TABLE"]]
     except:
         table_data = [["ERROR", "GETTING", "DATA"]]
-    return render_template("dashboard.html", table_data=table_data, row_count=row_count)
+    return render_template("dashboard.html", last_leak=last_leak, row_count=row_count, mq2_count=mq2_count, mq3_count=mq3_count, mq4_count=mq4_count, table_data=table_data)
 
 @app.post("/api/safe")
 def safe_handler():
