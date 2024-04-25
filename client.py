@@ -1,17 +1,17 @@
 import requests
 import json
 import time
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 
-# GPIO.setmode(GPIO.BCM)
-# DO_PIN = 7
-# GPIO.setup(DO_PIN, GPIO.IN)
-url = "http://localhost:8080/api/safe"
+GPIO.setmode(GPIO.BCM)
+DO_PIN = 7
+GPIO.setup(DO_PIN, GPIO.IN)
+url = "http://3.111.217.187:8080"
 
 def send_post_request(url, payload):
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(url, data=json.dumps(payload), headers=headers)
+    response = requests.post(url+"/api/unsafe", data=json.dumps(payload), headers=headers)
     return response
 
 last4 = [0, 0, 0, 0]
@@ -39,4 +39,4 @@ while True:
     print(send_post_request(url, data).text)
     if last4==[1, 1, 1, 1]:
         print("sending alert")
-        print(requests.get("http://localhost:8080/api/unsafe").text)
+        print(requests.get(url+"/api/unsafe").text)
