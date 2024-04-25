@@ -1,5 +1,7 @@
 from dotenv import dotenv_values
 
+backend_url = dotenv_values(".env")["BACKEND_URL"]
+
 mysqlhost = dotenv_values(".env")["MYSQL_HOST"]
 mysqluser = dotenv_values(".env")["MYSQL_USER"]
 mysqlpass = dotenv_values(".env")["MYSQL_PASSWORD"]
