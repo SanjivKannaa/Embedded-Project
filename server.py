@@ -40,7 +40,38 @@ def home():
 
 @app.get("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    table_data = "inital table data"
+    row_count = 0
+    t1 = env.mysqltablename1
+    t2 = env.mysqltablename2
+    t3 = env.mysqltablename3
+    try:
+        # get total row count
+        query = '''SELECT COUNT(*) FROM {}'''.format(t1)
+        cur.execute(query)
+        row_count = cur.fetchall()[0][0]
+    except:
+        pass
+    try:
+        # get table data
+        table_data = []
+        query = '''
+        SELECT
+        {}.timestamp,
+        {}.value AS {}value,
+        {}.value AS {}value,
+        {}.value AS {}value
+        FROM {}
+        LEFT JOIN {} ON {}.timestamp = {}.timestamp
+        LEFT JOIN {} ON {}.timestamp = {}.timestamp
+        ORDER BY timestamp DESC'''.format(t1, t1, t1, t2, t2, t3, t3, t1, t2, t1, t2, t3, t2, t3)
+        cur.execute(query)
+        table_data = list(cur.fetchall())
+        if table_data == []:
+            table_data = [["EMPTY", "TABLE"]]
+    except:
+        table_data = [["ERROR", "GETTING", "DATA"]]
+    return render_template("dashboard.html", table_data=table_data, row_count=row_count)
 
 @app.post("/api/safe")
 def safe_handler():
@@ -63,7 +94,19 @@ def unsafe_handler():
     try:
         # time.sleep(10)
         message_body = "A gas leak gas been detected in the smart gas leak detection system.\nActivity in the last 1 min:\nTIMESTAMP     GAS1 GAS2 GAS3"
-        query = '''SELECT timestamp, value FROM ( SELECT timestamp, value as {} FROM {} UNION SELECT timestamp, value as {} FROM {} UNION SELECT timestamp, value as {} FROM {} ) AS all ORDER BY timestamp DESC LIMIT 6'''.format(env.mysqltablename1, env.mysqltablename1, env.mysqltablename2, env.mysqltablename2, env.mysqltablename3, env.mysqltablename3)
+        t1 = env.mysqltablename1
+        t2 = env.mysqltablename2
+        t3 = env.mysqltablename3
+        query = '''
+        SELECT
+        {}.timestamp,
+        {}.value AS {}value,
+        {}.value AS {}value,
+        {}.value AS {}value
+        FROM {}
+        LEFT JOIN {} ON {}.timestamp = {}.timestamp
+        LEFT JOIN {} ON {}.timestamp = {}.timestamp
+        ORDER BY timestamp DESC LIMIT 6'''.format(t1, t1, t1, t2, t2, t3, t3, t1, t2, t1, t2, t3, t2, t3)
         cur.execute(query)
         empty_db = True
         for i in cur.fetchall():
@@ -71,7 +114,7 @@ def unsafe_handler():
             message_body += "\n" + str(i[0]) + "\t" + str(i[1]) + "\t" + str(i[2]) + "\t" + str(i[3])
         if empty_db:
             message_body += "<NO LOGS>"
-        message_body += "\nFor more info, login into your dashboard at gasdetector.magickite.tech/dashboard"
+        message_body += "\nFor more info, login into your dashboard at {}/dashboard".format(env.backend_url)
         message = client.messages.create(
             body=message_body,
             from_=twilio_phone_number,

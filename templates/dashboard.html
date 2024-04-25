@@ -2,6 +2,25 @@
 <html lang="en">
 <head>
   <title>Dashboard | Gas Leakage Detection System</title>
+  <script>
+    const ctx = document.getElementById('chart-container').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Normal', 'Elevated'],
+        datasets: [{
+          data: [80, 20], // Adjust these values based on your actual data
+          backgroundColor: [
+            'rgba(0, 255, 0, 0.7)', // Green for normal
+            'rgba(255, 0, 0, 0.7)', // Red for elevated
+          ],
+        }],
+      },
+      options: {
+        responsive: true,
+      },
+    });
+  </script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -73,6 +92,18 @@
       width: 25%;
       height: auto;
     }
+    table {
+      margin: auto; /* Center the table */
+      font-size: 30px;
+      width: 80%;
+      border: 4px solid #333;
+    }
+    tr, th{
+      border: 4px solid #333;
+    }
+    td{
+      border: 2px solid #333;
+    }
   </style>
 </head>
 <body>
@@ -80,38 +111,38 @@
     <h1>Gas Leakage Detection System</h1>
   </header>
   <div id="main-content">
-    
     <div class="data-box">
-        <h2>Average Gas Level (Past 24 hrs):</h2>
-        <p>5.2 PPM</p>
-      </div>
-      <div class="data-box">
-        <h2>Last Leak Detected:</h2>
-        <p>2024-04-17 14:32:11</p>
-      </div>
-      <div class="data-box">
-        <h2>Number of Leaks Detected (Past 30 days):</h2>
-        <p>12</p>
-      </div>
-      <div id="chart-container"></div>
-      <script>
-        const ctx = document.getElementById('chart-container').getContext('2d');
-        const chart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: ['Normal', 'Elevated'],
-            datasets: [{
-              data: [80, 20], // Adjust these values based on your actual data
-              backgroundColor: [
-                'rgba(0, 255, 0, 0.7)', // Green for normal
-                'rgba(255, 0, 0, 0.7)', // Red for elevated
-              ],
-            }],
-          },
-          options: {
-            responsive: true,
-          },
-        });
-      </script>
+      <h2>Average Gas Level (Past 24 hrs):</h2>
+      <p>5.2 PPM</p>
+    </div>
+    <div class="data-box">
+      <h2>Last Leak Detected:</h2>
+      <p>2024-04-17 14:32:11</p>
+    </div>
+    <div class="data-box">
+      <h2>Number of Leaks Detected (Past 30 days):</h2>
+      <p>12</p>
+    </div>
+    <div class="data-box">
+      <h2>ROW COUNT</h2>
+      <p>{{ row_count }}</p>
+    </div>
+    <br><br><br><br>
+    <table>
+      <tr>
+        <th>TIMESTAMP</th>
+        <th>MQ2</th>
+        <th>MQ3</th>
+        <th>MQ4</th>
+      </tr>
+      {% for row in table_data %}
+        <tr>
+          {% for element in row %}
+            <td>{{ element }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 </body>
 </html>

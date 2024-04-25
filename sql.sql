@@ -18,5 +18,25 @@ INSERT INTO mq4 values("2", "1");
 INSERT INTO mq4 values("4", "0");
 INSERT INTO mq4 values("5", "1");
 
-select mq2.timestamp, mq2.value as v1, mq3.value as v2 from mq2 FULL OUTER JOIN mq3 ON mq2.timestamp=mq3.timestamp
-select mq2.timestamp, mq2.value as mq2a, mq3.value as mq3a, mq4.value as mq4a from mq2 FULL OUTER JOIN mq3 ON mq2.timestamp=mq3.timestamp FULL OUTER JOIN mq4 ON mq3.timestamp=mq4.timestamp AS ALL ORDER BY mq2.timestamp DESC LIMIT 6;
+
+
+
+SELECT
+mq2.timestamp,
+mq2.value AS mq2value,
+mq3.value AS mq3value,
+mq4.value AS mq4value
+FROM mq2
+LEFT JOIN mq3 ON mq2.timestamp = mq3.timestamp
+LEFT JOIN mq4 ON mq3.timestamp = mq4.timestamp
+ORDER BY timestamp;
+
++-----------+----------+----------+----------+
+| timestamp | mq2value | mq3value | mq4value |
++-----------+----------+----------+----------+
+| 1         | 1        | 1        | 1        |
+| 2         | 1        | 1        | 1        |
+| 3         | 0        | 0        |          |
+| 4         | 1        | 1        | 0        |
+| 5         | 1        |          | 1        |
++-----------+----------+----------+----------+
