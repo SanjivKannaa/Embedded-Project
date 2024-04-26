@@ -120,6 +120,31 @@
     #count_td{
       border: 0px solid #333;
     }
+    .clear_button {
+      background-color: #cf4a4a;
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .clear_button:hover {
+      background-color: #ff0000;
+      transform: scale(1.05);
+    }
+
+
+    /* Adjust button alignment */
+    .button-container {
+      margin-left: auto;
+      margin-top: 25px;
+      margin-right: 25px;
+      text-align: right;
+    }
 
   </style>
 </head>
@@ -127,6 +152,12 @@
   <header>
     <h1>Gas Leakage Detection System</h1>
   </header>
+  <!-- Adjusted button container -->
+  <div class="button-container">
+    <form action="/clear_data" method="get">
+        <button class="clear_button" type="submit">CLEAR DATA</button>
+    </form>
+  </div>
   <div id="main-content">
     <div class="data-box">
       <h2>Last Leak Detected:</h2>

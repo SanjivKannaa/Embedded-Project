@@ -126,6 +126,14 @@ def dashboard():
         table_data = [["ERROR", "GETTING", "DATA"]]
     return render_template("dashboard.html", last_leak=last_leak, row_count=row_count, mq2_count=mq2_count, mq3_count=mq3_count, mq4_count=mq4_count, table_data=table_data)
 
+@app.get("/clear_data")
+def clear_data():
+    cur.execute("delete from {}".format(env.mysqltablename1))
+    cur.execute("delete from {}".format(env.mysqltablename2))
+    cur.execute("delete from {}".format(env.mysqltablename3))
+    mydb.commit()
+    return app.redirect("/dashboard")
+
 @app.post("/api/safe")
 def safe_handler():
     try:
