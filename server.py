@@ -46,7 +46,7 @@ def dashboard():
     mq3_count = 0
     mq4_count = 0
     row_count = 0
-    table_data = "inital table data"
+    table_data = ""
     t1 = env.mysqltablename1
     t2 = env.mysqltablename2
     t3 = env.mysqltablename3
@@ -60,18 +60,21 @@ def dashboard():
         FROM {}
         LEFT JOIN {} ON {}.timestamp = {}.timestamp
         LEFT JOIN {} ON {}.timestamp = {}.timestamp
-        WHERE {}.value=1 or {}.value=1 or {}.value=1
-        ORDER BY timestamp DESC LIMIT 1'''.format(t1, t1, t1, t2, t2, t3, t3, t1, t2, t1, t2, t3, t2, t3, t1, t2, t3)
+        ORDER BY timestamp DESC'''.format(t1, t1, t1, t2, t2, t3, t3, t1, t2, t1, t2, t3, t2, t3)
         cur.execute(query)
         # last_leak = str(cur.fetchall()[0][3])
-        data = cur.fetchall()[0]
-        last_leak = data[0] + " "
-        if data[1] == "1":
-            last_leak += t1 + " "
-        elif data[2] == "1":
-            last_leak += t2 + " "
-        elif data[3] == "1":
-            last_leak += t3 + " "
+        data = cur.fetchall()
+        for i in data:
+            if "1" in i[1:]:
+                last_leak = i[0] + " "
+                if i[1] == "1":
+                    last_leak += t1 + " and "
+                if i[2] == "1":
+                    last_leak += t2 + " and "
+                if i[3] == "1":
+                    last_leak += t3 + " and "
+                break
+        last_leak = last_leak[:-4]
     except:
         pass
     try:
@@ -85,7 +88,7 @@ def dashboard():
         current_time = datetime.datetime.now()
         thirty_days_ago = current_time - datetime.timedelta(days=30)
         formatted_time = thirty_days_ago.strftime("%Y-%m-%d %H:%M:%S")
-        cur.execute("SELECT count(*) from {} where value=1 and timestamp>{}".format(t1, formatted_time))
+        cur.execute("SELECT count(*) from {} where value=1 and timestamp>'{}'".format(t1, formatted_time))
         mq2_count = cur.fetchall()[0][0]
     except:
         pass
@@ -93,7 +96,7 @@ def dashboard():
         current_time = datetime.datetime.now()
         thirty_days_ago = current_time - datetime.timedelta(days=30)
         formatted_time = thirty_days_ago.strftime("%Y-%m-%d %H:%M:%S")
-        cur.execute("SELECT count(*) from {} where value=1 and timestamp>{}".format(t2, formatted_time))
+        cur.execute("SELECT count(*) from {} where value=1 and timestamp>'{}'".format(t2, formatted_time))
         mq3_count = cur.fetchall()[0][0]
     except:
         pass
@@ -101,7 +104,7 @@ def dashboard():
         current_time = datetime.datetime.now()
         thirty_days_ago = current_time - datetime.timedelta(days=30)
         formatted_time = thirty_days_ago.strftime("%Y-%m-%d %H:%M:%S")
-        cur.execute("SELECT count(*) from {} where value=1 and timestamp>{}".format(t3, formatted_time))
+        cur.execute("SELECT count(*) from {} where value=1 and timestamp>'{}'".format(t3, formatted_time))
         mq4_count = cur.fetchall()[0][0]
     except:
         pass
