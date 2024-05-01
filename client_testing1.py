@@ -7,7 +7,7 @@ import random
 # GPIO.setmode(GPIO.BCM)
 # DO_PIN = 7
 # GPIO.setup(DO_PIN, GPIO.IN)
-url = "http://localhost:8080"
+url = "http://embeddedproject.magickite.tech"
 
 def send_post_request(url, payload):
     headers = {'Content-Type': 'application/json'}

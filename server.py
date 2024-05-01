@@ -5,6 +5,13 @@ import env
 import time
 import datetime
 
+creds = {
+    "sanjiv": "sanjiv",
+    "krupa": "krupa",
+    "appruval": "appruval"
+}
+
+
 try:
     mydb = sql.connect(
         host=env.mysqlhost,
@@ -38,6 +45,24 @@ app =  Flask(__name__)
 @app.get("/")
 def home():
     return render_template("home.html", backend_url=env.backend_url)
+
+
+@app.get("/login")
+def login():
+    return render_template("login.html", error="")
+
+@app.post("/login")
+def login_action():
+    username = request.form['username']
+    password = request.form['password']
+    global creds
+    if username in creds.keys():
+        if creds[username]==password:
+            return app.redirect("/dashboard")
+        else:
+            return render_template("login.html", error="wrong password")
+    return render_template("login.html", error="user not identified")
+
 
 @app.get("/dashboard")
 def dashboard():
@@ -135,7 +160,7 @@ def clear_data():
     cur.execute("delete from {}".format(env.mysqltablename2))
     cur.execute("delete from {}".format(env.mysqltablename3))
     mydb.commit()
-    return app.redirect("/dashboard")
+    return app.redirect("/login")
 
 @app.post("/api/safe")
 def safe_handler():
