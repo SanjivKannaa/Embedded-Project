@@ -18,7 +18,7 @@ last4 = [0, 0, 0, 0]
 
 while True:
     data = {
-        "id": "mq3",
+        "id": "mq2",
         "data": {
             # "timestamp": 0/1
         }
