@@ -160,7 +160,7 @@ def clear_data():
     cur.execute("delete from {}".format(env.mysqltablename2))
     cur.execute("delete from {}".format(env.mysqltablename3))
     mydb.commit()
-    return app.redirect("/login")
+    return app.redirect("/dashboard")
 
 @app.post("/api/safe")
 def safe_handler():
@@ -203,7 +203,7 @@ def unsafe_handler():
             message_body += "\n" + str(i[0]) + "\t" + str(i[1]) + "\t" + str(i[2]) + "\t" + str(i[3])
         if empty_db:
             message_body += "<NO LOGS>"
-        message_body += "\nFor more info, login into your dashboard at {}/dashboard".format(env.backend_url)
+        message_body += "\nFor more info, login into your dashboard at {}/login".format(env.backend_url)
         message = client.messages.create(
             body=message_body,
             from_=twilio_phone_number,

@@ -4,8 +4,8 @@ import time
 import RPi.GPIO as GPIO
 
 
-GPIO.setmode(GPIO.BCM)
-DO_PIN = 7
+GPIO.setmode(GPIO.BOARD)
+DO_PIN = 3
 GPIO.setup(DO_PIN, GPIO.IN)
 url = "http://3.111.217.187:8080"
 
@@ -18,14 +18,14 @@ last4 = [0, 0, 0, 0]
 
 while True:
     data = {
-        "id": "mq2",
+        "id": "mq4",
         "data": {
             # "timestamp": 0/1
         }
     }
-    for _ in range(3): # 0.5 min = 3 times x 10 seconds
+    for _ in range(3): # 0.25 min = 3 times x 5 seconds
         # print("_ = ", _)
-        time.sleep(1)
+        time.sleep(5)
         gas_present = GPIO.input(DO_PIN)
         if gas_present == GPIO.LOW:# safe is 0, unsafe is 1
             data["data"][time.strftime("%d%Y-%m-%d %H:%M:%S", time.localtime())] = "0" #Wed Apr 24 13:12:28 2024
