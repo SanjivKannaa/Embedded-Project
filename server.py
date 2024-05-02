@@ -174,8 +174,8 @@ def safe_handler():
             cur.execute(query)
         mydb.commit()
         return 'Data added to database!'
-    except:
-        return "ERROR"
+    except Exception as e:
+        return "ERROR"+str(e)
 
 
 @app.get("/api/unsafe")
@@ -210,8 +210,8 @@ def unsafe_handler():
             to=to_phone_number
         )
         return "alert sent"
-    except:
-        return "ERROR"
+    except Exception as e:
+        return "ERROR"+str(e)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
